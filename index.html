@@ -28,7 +28,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <!-- Navigation -->
@@ -70,7 +70,6 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-
       <!-- MUSIC AUDIO -->
       <!-- <audio controls>
         <source src="audio/name.mp3" type="audio/mpeg">
@@ -78,10 +77,13 @@
       </audio> -->
       <!-- END MUSIC AUDIO -->
 
-      
       <div class="hero-content">
-        <h5 class="mb-4 animate__animated animate__backInDown">WE ARE GETTING MARRIED</h5>
-        <h1 class="mb-3 animate__animated animate__fadeInLeftBig">Maria & John</h1>
+        <h5 class="mb-4 animate__animated animate__backInDown">
+          WE ARE GETTING MARRIED
+        </h5>
+        <h1 class="mb-3 animate__animated animate__fadeInLeftBig">
+          Maria & John
+        </h1>
         <p class="lead mb-4">October 15, 2025 • New York, NY</p>
         <a href="#rsvp" class="btn btn-light btn-lg">RSVP</a>
       </div>
@@ -90,7 +92,11 @@
     <!-- Couple Section -->
     <section id="couple" class="couple-section">
       <div class="container">
-        <h2 class="text-center section-title wow animate__animated animate__flip">The Happy Couple</h2>
+        <h2
+          class="text-center section-title wow animate__animated animate__flip"
+        >
+          The Happy Couple
+        </h2>
         <div class="row">
           <div class="col-md-5 text-center">
             <img
@@ -318,13 +324,14 @@
           <div class="col-md-8 mx-auto">
             <div class="card shadow">
               <div class="card-body p-5">
-                <form>
+                <form id="rsvpForm">
                   <div class="row">
                     <div class="col-md-6 mb-3">
                       <input
                         type="text"
                         class="form-control"
                         placeholder="Your Name"
+                        id="name"
                         required
                       />
                     </div>
@@ -333,18 +340,19 @@
                         type="email"
                         class="form-control"
                         placeholder="Your Email"
+                        id="email"
                         required
                       />
                     </div>
                   </div>
                   <div class="mb-3">
-                    <select class="form-control">
+                    <select class="form-control" id="attendance">
                       <option>I Will Attend</option>
                       <option>I Will Not Attend</option>
                     </select>
                   </div>
                   <div class="mb-3">
-                    <select class="form-control">
+                    <select class="form-control" id="guests">
                       <option>No Guests</option>
                       <option>1 Guest</option>
                       <option>2 Guests</option>
@@ -356,6 +364,7 @@
                       class="form-control"
                       rows="4"
                       placeholder="Your Message"
+                      id="message"
                     ></textarea>
                   </div>
                   <button type="submit" class="btn btn-primary w-100">
@@ -364,6 +373,25 @@
                 </form>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-8 mx-auto">
+            <h3 class="text-center">RSVP List</h3>
+            <table class="table table-bordered" id="rsvpTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Attendance</th>
+                  <th>Guests</th>
+                  <th>Message</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- RSVP entries will be added here -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -437,6 +465,46 @@
             navToggler.click();
           }
         });
+      });
+    </script>
+
+    <!-- Custom JS -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const rsvpForm = document.getElementById("rsvpForm");
+        const rsvpTable = document
+          .getElementById("rsvpTable")
+          .getElementsByTagName("tbody")[0];
+
+        // Load existing RSVPs from local storage
+        const rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
+        rsvps.forEach(addRsvpToTable);
+
+        rsvpForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const attendance = document.getElementById("attendance").value;
+          const guests = document.getElementById("guests").value;
+          const message = document.getElementById("message").value;
+
+          const rsvp = { name, email, attendance, guests, message };
+          rsvps.push(rsvp);
+          localStorage.setItem("rsvps", JSON.stringify(rsvps));
+
+          addRsvpToTable(rsvp);
+          rsvpForm.reset();
+        });
+
+        function addRsvpToTable(rsvp) {
+          const row = rsvpTable.insertRow();
+          row.insertCell(0).innerText = rsvp.name;
+          row.insertCell(1).innerText = rsvp.email;
+          row.insertCell(2).innerText = rsvp.attendance;
+          row.insertCell(3).innerText = rsvp.guests;
+          row.insertCell(4).innerText = rsvp.message;
+        }
       });
     </script>
   </body>
