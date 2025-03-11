@@ -1,3 +1,12 @@
+body {
+    font-family: "Montserrat", sans-serif;
+    color: #5a5a5a;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: "Playfair Display", serif;
+}
+
 .hero {
     width: 100%;
     height: 100vh;  
@@ -10,6 +19,28 @@
         no-repeat center center;
     color: white;
     background-size: cover;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+.section-title {
+    position: relative;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+}
+
+.section-title:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: #d4af7a;
 }
 
 .couple-section {
@@ -25,4 +56,103 @@
     object-fit: cover;
     border: 5px solid rgb(227, 223, 223);
     margin: 0 auto 20px;
+}
+
+.event-card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+}
+
+.event-card .card-body {
+    padding: 30px;
+}
+
+.event-icon {
+    font-size: 2rem;
+    color: #d4af7a;
+    margin-bottom: 15px;
+}
+
+.countdown {
+    background-color: #d4af7a;
+    color: white;
+    padding: 80px 0;
+}
+
+.countdown-number {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.countdown-text {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.gallery-item {
+    margin-bottom: 30px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.gallery-item img {
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.rsvp-section {
+    background-color: #faf9f8;
+    padding: 100px 0;
+}
+
+.form-control {
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: 1px solid #e0e0e0;
+}
+
+.btn-primary {
+    background-color: #d4af7a;
+    border-color: #d4af7a;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: #c39a6b;
+    border-color: #c39a6b;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.social-icon a {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.social-icon a:hover {
+    color: #d4af7a;
 }
