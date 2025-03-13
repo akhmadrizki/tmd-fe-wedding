@@ -320,6 +320,7 @@
     <section id="rsvp" class="rsvp-section">
       <div class="container">
         <h2 class="text-center section-title">RSVP</h2>
+
         <div class="row">
           <div class="col-md-8 mx-auto">
             <div class="card shadow">
@@ -330,6 +331,7 @@
                       <input
                         type="text"
                         class="form-control"
+                        id="name"
                         placeholder="Your Name"
                         id="name"
                         required
@@ -338,6 +340,7 @@
                     <div class="col-md-6 mb-3">
                       <input
                         type="email"
+                        id="email"
                         class="form-control"
                         placeholder="Your Email"
                         id="email"
@@ -346,13 +349,13 @@
                     </div>
                   </div>
                   <div class="mb-3">
-                    <select class="form-control" id="attendance">
+                    <select id="attendance" class="form-control">
                       <option>I Will Attend</option>
                       <option>I Will Not Attend</option>
                     </select>
                   </div>
                   <div class="mb-3">
-                    <select class="form-control" id="guests">
+                    <select class="form-control" id="guest">
                       <option>No Guests</option>
                       <option>1 Guest</option>
                       <option>2 Guests</option>
@@ -362,6 +365,7 @@
                   <div class="mb-4">
                     <textarea
                       class="form-control"
+                      id="message"
                       rows="4"
                       placeholder="Your Message"
                       id="message"
@@ -371,13 +375,16 @@
                     Send RSVP
                   </button>
                 </form>
+
               </div>
             </div>
           </div>
         </div>
+
         <div class="row mt-5">
           <div class="col-md-8 mx-auto">
-            <h3 class="text-center">RSVP List</h3>
+            <h3 class="text-center">RSVP LIST</h3>
+
             <table class="table table-bordered" id="rsvpTable">
               <thead>
                 <tr>
@@ -388,12 +395,16 @@
                   <th>Message</th>
                 </tr>
               </thead>
+
               <tbody>
-                <!-- RSVP entries will be added here -->
+                <!-- RSVP value here -->
               </tbody>
             </table>
+
           </div>
         </div>
+
+
       </div>
     </section>
 
@@ -418,6 +429,9 @@
 
     <!-- WOW JS -->
     <script src="js/wow.js"></script>
+
+    <script src="js/store.js"></script>
+
     <script>
       new WOW().init();
     </script>
@@ -465,46 +479,6 @@
             navToggler.click();
           }
         });
-      });
-    </script>
-
-    <!-- Custom JS -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const rsvpForm = document.getElementById("rsvpForm");
-        const rsvpTable = document
-          .getElementById("rsvpTable")
-          .getElementsByTagName("tbody")[0];
-
-        // Load existing RSVPs from local storage
-        const rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
-        rsvps.forEach(addRsvpToTable);
-
-        rsvpForm.addEventListener("submit", function (e) {
-          e.preventDefault();
-
-          const name = document.getElementById("name").value;
-          const email = document.getElementById("email").value;
-          const attendance = document.getElementById("attendance").value;
-          const guests = document.getElementById("guests").value;
-          const message = document.getElementById("message").value;
-
-          const rsvp = { name, email, attendance, guests, message };
-          rsvps.push(rsvp);
-          localStorage.setItem("rsvps", JSON.stringify(rsvps));
-
-          addRsvpToTable(rsvp);
-          rsvpForm.reset();
-        });
-
-        function addRsvpToTable(rsvp) {
-          const row = rsvpTable.insertRow();
-          row.insertCell(0).innerText = rsvp.name;
-          row.insertCell(1).innerText = rsvp.email;
-          row.insertCell(2).innerText = rsvp.attendance;
-          row.insertCell(3).innerText = rsvp.guests;
-          row.insertCell(4).innerText = rsvp.message;
-        }
       });
     </script>
   </body>
