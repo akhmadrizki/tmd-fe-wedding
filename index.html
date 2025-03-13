@@ -314,16 +314,19 @@
     <section id="rsvp" class="rsvp-section">
       <div class="container">
         <h2 class="text-center section-title">RSVP</h2>
+
         <div class="row">
           <div class="col-md-8 mx-auto">
             <div class="card shadow">
               <div class="card-body p-5">
-                <form>
+
+                <form id="rsvpForm">
                   <div class="row">
                     <div class="col-md-6 mb-3">
                       <input
                         type="text"
                         class="form-control"
+                        id="name"
                         placeholder="Your Name"
                         required
                       />
@@ -331,6 +334,7 @@
                     <div class="col-md-6 mb-3">
                       <input
                         type="email"
+                        id="email"
                         class="form-control"
                         placeholder="Your Email"
                         required
@@ -338,13 +342,13 @@
                     </div>
                   </div>
                   <div class="mb-3">
-                    <select class="form-control">
+                    <select id="attendance" class="form-control">
                       <option>I Will Attend</option>
                       <option>I Will Not Attend</option>
                     </select>
                   </div>
                   <div class="mb-3">
-                    <select class="form-control">
+                    <select class="form-control" id="guest">
                       <option>No Guests</option>
                       <option>1 Guest</option>
                       <option>2 Guests</option>
@@ -354,6 +358,7 @@
                   <div class="mb-4">
                     <textarea
                       class="form-control"
+                      id="message"
                       rows="4"
                       placeholder="Your Message"
                     ></textarea>
@@ -362,10 +367,36 @@
                     Send RSVP
                   </button>
                 </form>
+
               </div>
             </div>
           </div>
         </div>
+
+        <div class="row mt-5">
+          <div class="col-md-8 mx-auto">
+            <h3 class="text-center">RSVP LIST</h3>
+
+            <table class="table table-bordered" id="rsvpTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Attendance</th>
+                  <th>Guests</th>
+                  <th>Message</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <!-- RSVP value here -->
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+
       </div>
     </section>
 
@@ -390,6 +421,9 @@
 
     <!-- WOW JS -->
     <script src="js/wow.js"></script>
+
+    <script src="js/store.js"></script>
+
     <script>
       new WOW().init();
     </script>
