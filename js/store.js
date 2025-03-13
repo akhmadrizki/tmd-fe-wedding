@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // load existing rsvp from local storage
     const rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
-    rsvps.forEach(addRsvpToTable);
+    rsvps.forEach((rsvp, index) => addRsvpToTable(rsvp, index));
 
     rsvpForm.addEventListener("submit", function(e) {
         e.preventDefault();
@@ -22,12 +22,12 @@ document.addEventListener("DOMContentLoaded", function() {
         rsvps.push(rsvp);
         localStorage.setItem("rsvps", JSON.stringify(rsvps));
 
-        addRsvpToTable(rsvp);
+        addRsvpToTable(rsvp, rsvps.length - 1);
         rsvpForm.reset();
 
     });
 
-    function addRsvpToTable(rsvp) {
+    function addRsvpToTable(rsvp, index) {
         const row = rsvpTable.insertRow();
 
         row.insertCell(0).innerText = rsvp.name;
@@ -35,10 +35,24 @@ document.addEventListener("DOMContentLoaded", function() {
         row.insertCell(2).innerText = rsvp.attendance;
         row.insertCell(3).innerText = rsvp.guest;
         row.insertCell(4).innerText = rsvp.message;
+        const deleteCell = row.insertCell(5);
+        const deleteButton = document.createElement("button");
+        deleteButton.innerText = "Delete";
+        deleteButton.addEventListener("click", function() {
+            deleteRsvp(index);
+        });
+        deleteCell.appendChild(deleteButton);
     }
 
+    function deleteRsvp(index) {
+        rsvps.splice(index, 1); // Remove the entry at the specified index
+        localStorage.setItem("rsvps", JSON.stringify(rsvps)); // Update local storage
+        loadRsvpTable(); // Reload the table
+    }
 
-} );
+    function loadRsvpTable() {
+        rsvpTable.innerHTML = ''; // Clear existing rows
+        rsvps.forEach((rsvp, index) => addRsvpToTable(rsvp, index));
+    }
 
-
-
+});
