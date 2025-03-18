@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
     rsvps.forEach((rsvp, index) => addRsvpToTable(rsvp, index));
 
-    rsvpForm.addEventListener("submit", function(e) {
+    function submitHandler(e) {
         e.preventDefault();
 
         const name       = document.getElementById("name").value;
@@ -24,8 +24,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         addRsvpToTable(rsvp, rsvps.length - 1);
         rsvpForm.reset();
+    }
 
-    });
+    rsvpForm.addEventListener("submit", submitHandler);
 
     function addRsvpToTable(rsvp, index) {
         const row = rsvpTable.insertRow();
@@ -45,6 +46,16 @@ document.addEventListener("DOMContentLoaded", function() {
             deleteRsvp(index);
         });
         deleteCell.appendChild(deleteButton);
+
+        // add btn edit
+        const editCell = row.insertCell(6);
+        const editButton = document.createElement("button");
+
+        editButton.innerText = "edit";
+        editButton.addEventListener("click", function() {
+            editRsvp(index);
+        });
+        editCell.appendChild(editButton);
     }
 
     function deleteRsvp(index) {
@@ -53,19 +64,38 @@ document.addEventListener("DOMContentLoaded", function() {
         loadRsvpTable();
     }
 
+    function editRsvp(index) {
+        const rsvp = rsvps[index];
+
+        document.getElementById("name").value = rsvp.name;
+        document.getElementById("email").value = rsvp.email;
+        document.getElementById("attendance").value = rsvp.attendance;
+        document.getElementById("guest").value = rsvp.guest;
+        document.getElementById("message").value = rsvp.message;
+
+        rsvpForm.removeEventListener("submit", submitHandler);
+        rsvpForm.addEventListener("submit", function updateHandler(e) {
+            e.preventDefault();
+
+            rsvp.name = document.getElementById("name").value;
+            rsvp.email = document.getElementById("email").value;
+            rsvp.attendance = document.getElementById("attendance").value;
+            rsvp.guest = document.getElementById("guest").value;
+            rsvp.message = document.getElementById("message").value;
+
+            rsvps[index] = rsvp;
+            localStorage.setItem("rsvps", JSON.stringify(rsvps));
+
+            loadRsvpTable();
+            rsvpForm.reset();
+
+            rsvpForm.removeEventListener("submit", updateHandler);
+            rsvpForm.addEventListener("submit", submitHandler);
+        });
+    }
+
     function loadRsvpTable() {
         rsvpTable.innerHTML = '';
-        rsvps.forEach((rsvp, index) => addRsvpToTable(rsvp, index));
-    }
-
-    function deleteRsvp(index) {
-        rsvps.splice(index, 1); // Remove the entry at the specified index
-        localStorage.setItem("rsvps", JSON.stringify(rsvps)); // Update local storage
-        loadRsvpTable(); // Reload the table
-    }
-
-    function loadRsvpTable() {
-        rsvpTable.innerHTML = ''; // Clear existing rows
         rsvps.forEach((rsvp, index) => addRsvpToTable(rsvp, index));
     }
 
