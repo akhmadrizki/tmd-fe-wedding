@@ -22,12 +22,12 @@ document.addEventListener("DOMContentLoaded", function() {
         rsvps.push(rsvp);
         localStorage.setItem("rsvps", JSON.stringify(rsvps));
 
-        addRsvpToTable(rsvp);
+        addRsvpToTable(rsvp, rsvps.length - 1);
         rsvpForm.reset();
 
     });
 
-    function addRsvpToTable(rsvp) {
+    function addRsvpToTable(rsvp, index) {
         const row = rsvpTable.insertRow();
 
         row.insertCell(0).innerText = rsvp.name;
@@ -35,6 +35,27 @@ document.addEventListener("DOMContentLoaded", function() {
         row.insertCell(2).innerText = rsvp.attendance;
         row.insertCell(3).innerText = rsvp.guest;
         row.insertCell(4).innerText = rsvp.message;
+
+        // add btn delete
+        const deleteCell = row.insertCell(5);
+        const deleteButton = document.createElement("button");
+
+        deleteButton.innerText = "hapus";
+        deleteButton.addEventListener("click", function() {
+            deleteRsvp(index);
+        });
+        deleteCell.appendChild(deleteButton);
+    }
+
+    function deleteRsvp(index) {
+        rsvps.splice(index, 1);
+        localStorage.setItem("rsvps", JSON.stringify(rsvps));
+        loadRsvpTable();
+    }
+
+    function loadRsvpTable() {
+        rsvpTable.innerHTML = '';
+        rsvps.forEach((rsvp, index) => addRsvpToTable(rsvp, index));
     }
 
 
